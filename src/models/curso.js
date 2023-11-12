@@ -1,47 +1,68 @@
 import mongoose from 'mongoose';
-const { Schema,model,models } = mongoose;
+
+const { Schema,model,models,ObjectId } = mongoose;
+
 const cursoSchema = new Schema({
-  nombre:{
-    type:String,
-    unique:true,
-    trim:true,
-    required:[true,"El nombre es obligatorio"]
-  },
-  logo:{
-    type:String,
-    trim:true,
-    required:[true,"Imagen Obligatoria"],
-    default:'#'
-  },
-  color_hexa:{
-    type:String,
-    default:true
-  },
-  costo_personalizado:{
-    type:Float32Array,
-    default:0
-  },
-  costo_referencial:{
-
-  },
-  eslogan:{
-    type:String,
-
-
-  },
-  descripcion:{
-    type:Text
-  },
-  horas_academicas:{
-    type:Float32Array,
-  },
-  horas_reales:{
-    type:Float32Array,
-  }
-},
-{
-    timestamps:true
-}
-);
+    nombre:{
+        type: String,
+        required:[true,'El nombre de carrera es requerido'],
+        unique:true,
+        trim:true,
+    },
+    logo:{
+        type: String,
+        required:[true,'El logo es requerido'],
+        trim:true,
+    },    
+    color_hexa:{
+        type: String,
+        required:[true,'El color es requerido'],
+        trim:true,
+    },    
+    costo_personalizado:{
+        type:Number,
+        required:[true,'El costo es requerido'],
+        trim:true,
+    },
+    costo_referencial:{
+        type:Number,
+        required:[true,'El costo referencial es requerido'],
+        trim:true,
+    },
+    eslogan:{
+        type: String,
+        required:[true,'El eslogan es requerido'],
+        trim:true,
+    },
+    descripcion:{
+        type: String,
+        required:[true,'La descripcion es requerida'],
+        trim:true,
+    },
+    horas_academicas:{
+        type: Number,
+        required:[true,'Las horas son requeridas'],
+        trim:true,
+    },
+    horas_reales:{
+        type: Number,
+        required:[true,'Las horas reales son requeridas'],
+        trim:true,
+    },
+    area:{
+        type:ObjectId,
+        ref:'Area'
+      },
+      
+      
+    dificultad:{
+        type:ObjectId,
+        ref:'Dificultad'
+    }
+    
+    }, 
+    {
+        timestamps: true
+    });
 
 export default models.Curso || model('Curso',cursoSchema);

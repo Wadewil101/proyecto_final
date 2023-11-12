@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import {connectDB} from '@/libs/mongoose';
-import Cursos from '@/models/curso';
+import Capitulos from '@/models/capitulo';
 
 export async function GET(){
     try {
         await connectDB();
-        const cursos= await Cursos.find();
+        const capitulos= await Capitulos.find();
         return NextResponse.json({
-            cursos
+            capitulos
         })
     } catch (error) {
         console.log(error)
@@ -18,8 +18,8 @@ export async function POST(request){
     try {
         await connectDB();
         const data = await request.json();
-        const newCurso = new Cursos(data); 
-        const respuesta = await newCurso.save();
+        const newCapitulo = new Capitulos(data); 
+        const respuesta = await newCapitulo.save();
         console.log(data);
         return NextResponse.json({
         respuesta
