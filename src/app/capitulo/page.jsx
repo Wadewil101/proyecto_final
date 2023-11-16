@@ -1,31 +1,39 @@
 import { connectDB } from "@/libs/mongoose";
-import Capitulo from '@/models/capitulo';
-//import UniversidadCard from "../../components/UniversidadCard";
+import Capitulos from '@/models/capitulo';
+import CapituloCard from "../../components/CapituloCard";
+import Link from "next/link";
+import capitulo from "@/models/capitulo";
 
-/*async function loadUniversidades(){
+async function loadCapitulos(){
     await connectDB();
-    const universidades = await Universidad.find();
-    console.log(universidades);
-    return universidades;
-}*/
-const fetchCapitulos=()=>{
-    return fetch('http://localhost:3000/api/capitulo')
-        .then(res=>res.json())
+    const capitulos = await Capitulos.find();
+    console.log(capitulos);
+    return capitulos;
 }
 
 async function HomePage(){
-    const {capitulos}= await fetchCapitulos();
+    const capitulos= await loadCapitulos();
     return(
+        <>
+        <div className="m-5">
+           <Link href="capitulo/new" className="bg-green-600  hover:bg-green-800 text-white font-bold px-4 py-4 rounded-lg">
+                 Nueva Capitulo
+           </Link> 
+        </div>
+        
+        
         <div className="grid grid-cols-3 gap-2 ">
+            
             {
                 capitulos.map(capitulo=>(
-                   <capitulosCard 
+                   <CapituloCard 
                         key={capitulo._id} 
                         capitulo={capitulo} 
                     />
                 ))
             }
         </div>
+        </>
     );
 }
 

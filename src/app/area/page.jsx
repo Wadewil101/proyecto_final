@@ -1,26 +1,42 @@
+import { connectDB } from "@/libs/mongoose";
+import Areas from '@/models/area';
+import AreaCard from "../../components/AreaCard";
 import Link from "next/link";
 
-export const feachAreas=()=>{
-   return fetch('http://localhost:3000/api/area')
-   //return fetch('https://jsonplaceholder.typicode.com/posts')
-   .then(res=>res.json());
+async function loadAreas(){
+    await connectDB();
+    const areas = await Areas.find();
+    console.log(areas);
+    return areas;
 }
 
-export default async function Areas(){
-    const {areas}= await feachAreas();
-    console.log(areas);
+async function HomePage(){
+    const areas= await loadAreas();
     return(
-        <div>
-            <h1>Areas</h1>
-            <Link href="/">Inicio</Link>
+        <>
+        <h1>Areas</h1>
+            <div></div><Link href="/">Inicio</Link>
+        <div className="m-5">
+        
+           <Link href="area/new" className="bg-green-600  hover:bg-green-800 text-white font-bold px-4 py-4 rounded-lg">
+                 Nueva Area
+           </Link> 
+        </div>
+        
+        
+        <div className="grid grid-cols-3 gap-2 ">
+            
             {
-                cursos.map(area=>(
-                    <div  className="bg-gray-700 p-10 mt-5 text-white" key={area._id}>
-                        <h1>{area.titulo}</h1>
-                    </div>
+                areas.map(area=>(
+                   <AreaCard 
+                        key={area._id} 
+                        area={area} 
+                    />
                 ))
             }
         </div>
-    )
-
+        </>
+    );
 }
+
+export default HomePage;
